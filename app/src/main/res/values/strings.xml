@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Spectacle</string>
+    <string name="welcome_text">Welcome Spectacle!</string>
+
+    <!-- OIDC / Login strings -->
+    <string name="loading_config">Loading Keycloak configuration… </string>
+    <string name="not_logged_in">Not logged in. Click button to connect.</string>
+
+    <string name="failed_oidc_config">Failed to load OIDC config: %1$s</string>
+    <string name="failed_config">Failed to load OIDC config: %1$s</string>
+    <string name="already_logged_in">Already logged in. Token: %1$s</string>
+    <string name="logged_in">✅ Logged in!\n\nAccess Token:\n%1$s</string>
+    <string name="login_success">✅ Logged in!\n\nAccess Token:\n%1$s\n\nRefresh Token:\n%2$s</string>
+    <string name="token_failed">Token exchange failed: %1$s</string>
+    <string name="token_exchange_failed">Token exchange failed: %1$s</string>
+    <string name="auth_failed">Authorization failed: %1$s</string>
+
+    <string name="keycloak_discovery_url">https://auth.kodelab.fr/realms/kodelab/.well-known/openid-configuration</string>
+    <string name="oidc_client_id">spectacle-android</string>
+    <string name="oidc_redirect_uri">com.example.spectacle:/oauth2redirect</string>
+    <string name="oidc_scopes">openid profile email offline_access</string>
+
+</resources>
