@@ -25,6 +25,8 @@
     <string name="failed_config">Failed to load OIDC config: %1$s</string>
 
     <string name="login">Log in</string>
+    <string name="selectImage">Select an Image from your phone</string>
+    <string name="pick_image">Select an Image from your phone</string>
 
     <!-- OIDC Configuration -->
     <string name="keycloak_discovery_url">https://auth.kodelab.fr/realms/kodelab/.well-known/openid-configuration</string>

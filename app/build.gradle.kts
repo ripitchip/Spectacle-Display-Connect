@@ -37,7 +37,6 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "11"
     }
 
     buildFeatures {
@@ -60,12 +59,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    // 🔐 AppAuth for OAuth2 / OpenID Connect login
-
-    implementation("androidx.security:security-crypto:1.1.0-alpha03")
-    implementation("androidx.core:core-ktx:1.12.0")
-
-    implementation("net.openid:appauth:0.11.1")
+    implementation(libs.security.crypto)
+    implementation(libs.appauth)
+    implementation(libs.glide)
 
     // Testing
     testImplementation(libs.junit)

@@ -16,18 +16,47 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:textColor="@android:color/black"
+        android:text="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- PixelCanvas Widget -->
-    <com.example.spectacle.ui.widgets.PixelCanvasView
-        android:id="@+id/pixelCanvasView"
-        android:layout_width="320dp"
-        android:layout_height="320dp"
-        android:layout_marginTop="16dp"
+    <!-- Select Image Button -->
+    <Button
+        android:id="@+id/selectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/selectImage"
         app:layout_constraintTop_toBottomOf="@id/text_home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Selected Image Preview -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/selected_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="80dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/selectImage"
+        app:layout_constraintBottom_toTopOf="@id/pick_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <!-- Floating Action Button (Pick Image) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/pick_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/pick_image"
+        android:src="@drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
