@@ -7,50 +7,41 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <!-- Header Text -->
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/select_image_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textColor="@android:color/black"
-        android:text="@string/app_name"
+        android:text="@string/selectImage"
+        android:layout_marginTop="120dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Select Image Button -->
-    <Button
-        android:id="@+id/selectImage"
+    <!-- Pixel-Art 64x64 Preview -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/image_preview_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/selectImage"
-        app:layout_constraintTop_toBottomOf="@id/text_home"
+        android:visibility="gone"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintTop_toBottomOf="@id/select_image_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Selected Image Preview -->
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/selected_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="80dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/selectImage"
-        app:layout_constraintBottom_toTopOf="@id/pick_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/selected_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:adjustViewBounds="false"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
 
-    <!-- Floating Action Button (Pick Image) -->
+    <!-- Floating Action Button to Pick Image -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/pick_image"
+        android:id="@+id/pick_image_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

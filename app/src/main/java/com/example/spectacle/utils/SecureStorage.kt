@@ -1,45 +1,83 @@
 package com.example.spectacle.utils
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
+import com.google.crypto.tink.Aead
+import com.google.crypto.tink.aead.AeadConfig
+import com.google.crypto.tink.aead.AeadKeyTemplates
+import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 
 object SecureStorage {
 
-    private const val PREFS_NAME = "secure_storage"
+    private const val KEYSET_FILE = "secure_prefs_keyset.json"
+    private const val PREFS_FILE = "secure_prefs_data"
 
-    // Lazy thread-safe SharedPreferences instance
-    private fun prefs(context: Context): SharedPreferences {
-        val masterKey = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+    init {
+        AeadConfig.register()
+    }
+
+    private fun getAead(context: Context): Aead {
+        val keysetHandle = AndroidKeysetManager.Builder()
+            .withSharedPref(context, KEYSET_FILE, "secure_storage_master_key")
+            .withKeyTemplate(AeadKeyTemplates.AES256_GCM)
+            .withMasterKeyUri("android-keystore://secure_prefs_master_key")
             .build()
+            .keysetHandle
 
-        return EncryptedSharedPreferences.create(
-            context,
-            PREFS_NAME,
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
+        return keysetHandle.getPrimitive(Aead::class.java)
     }
 
-    suspend fun save(context: Context, key: String, value: String) = withContext(Dispatchers.IO) {
-        prefs(context).edit { putString(key, value) }
+    private fun prefsFile(context: Context): File =
+        File(context.filesDir, PREFS_FILE)
+
+    private suspend fun writeData(context: Context, data: Map<String, String>) =
+        withContext(Dispatchers.IO) {
+            val aead = getAead(context)
+            val plain = buildString {
+                data.forEach { (k, v) -> append("$k=$v\n") }
+            }.encodeToByteArray()
+
+            prefsFile(context).writeBytes(aead.encrypt(plain, null))
+        }
+
+    private suspend fun readData(context: Context): MutableMap<String, String> =
+        withContext(Dispatchers.IO) {
+            val file = prefsFile(context)
+            if (!file.exists()) return@withContext mutableMapOf()
+
+            val aead = getAead(context)
+            val decrypted = aead.decrypt(file.readBytes(), null).decodeToString()
+
+            decrypted.lines()
+                .filter { it.contains("=") }
+                .associate {
+                    val (k, v) = it.split("=", limit = 2)
+                    k to v
+                }
+                .toMutableMap()
+        }
+
+    // Public API
+    suspend fun save(context: Context, key: String, value: String) {
+        val data = readData(context)
+        data[key] = value
+        writeData(context, data)
     }
 
-    suspend fun load(context: Context, key: String): String? = withContext(Dispatchers.IO) {
-        prefs(context).getString(key, null)
+    suspend fun load(context: Context, key: String): String? {
+        val data = readData(context)
+        return data[key]
     }
 
-    suspend fun remove(context: Context, key: String) = withContext(Dispatchers.IO) {
-        prefs(context).edit { remove(key) }
+    suspend fun remove(context: Context, key: String) {
+        val data = readData(context)
+        data.remove(key)
+        writeData(context, data)
     }
 
-    suspend fun clear(context: Context) = withContext(Dispatchers.IO) {
-        prefs(context).edit { clear() }
+    suspend fun clear(context: Context) {
+        writeData(context, emptyMap())
     }
 }

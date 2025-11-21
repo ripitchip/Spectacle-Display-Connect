@@ -8,13 +8,16 @@ espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.13.0"
 constraintlayout = "2.2.1"
-lifecycleLivedataKtx = "2.9.4"
-lifecycleViewmodelKtx = "2.9.4"
+lifecycleLivedataKtx = "2.10.0"
+lifecycleViewmodelKtx = "2.10.0"
 navigationFragmentKtx = "2.9.6"
 navigationUiKtx = "2.9.6"
 securityCrypto = "1.1.0"
 glide = "5.0.5"
+glideCompiler = "5.0.5"
 appauth = "0.11.1"
+ucrop = "2.2.11"
+tink = "1.19.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,8 +34,9 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 appauth = { group = "net.openid", name = "appauth", version.ref = "appauth" }
-
-
+ucrop = { group = "com.github.yalantis", name = "ucrop", version.ref = "ucrop" }
+tink = { group = "com.google.crypto.tink", name = "tink-android", version.ref = "tink" }
+glideCompiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideCompiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

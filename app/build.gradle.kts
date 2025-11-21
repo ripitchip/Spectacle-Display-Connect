@@ -32,11 +32,16 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
+    kotlin {
+        jvmToolchain(21)
+
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        }
     }
 
     buildFeatures {
@@ -62,6 +67,9 @@ dependencies {
     implementation(libs.security.crypto)
     implementation(libs.appauth)
     implementation(libs.glide)
+    implementation(libs.glideCompiler)
+    implementation(libs.tink)
+    implementation(libs.ucrop)
 
     // Testing
     testImplementation(libs.junit)
